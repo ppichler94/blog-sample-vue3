@@ -1,0 +1,42 @@
+= blog-sample-vue3
+
+Frontend for the https://github.com/ppichler94/blog-sample-backend[blog-sample-backend]
+
+== Project Setup
+
+[source,sh]
+----
+npm install
+
+----
+
+=== Compile and Hot-Reload for Development
+
+[source,sh]
+----
+npm run dev
+
+----
+
+=== Type-Check, Compile and Minify for Production
+
+[source,sh]
+----
+npm run build
+
+----
+
+=== Run Unit Tests with https://vitest.dev/[Vitest]
+
+[source,sh]
+----
+npm run test:unit
+
+----
+
+=== Lint with https://eslint.org/[ESLint]
+
+[source,sh]
+----
+npm run lint
+----
