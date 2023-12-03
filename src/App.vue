@@ -27,6 +27,8 @@ header {
   display: flex;
   place-items: center;
   padding-right: calc(var(--section-gap) / 2);
+  border-bottom: 1px solid;
+  border-color: var(--color-border);
 }
 
 .logo {
