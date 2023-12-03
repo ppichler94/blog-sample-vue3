@@ -1,16 +1,18 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div class="header">
-<slot /></div>
   <div class="container">
-   <slot/>
+    <div class="header">
+      <slot name="pageHeaderContent" />
+    </div>
+    <div class="pageContent">
+      <slot />
+    </div>
   </div>
-
 </template>
 
 <style scoped>
-
+.pageContent {
+  margin-top: 1rem;
+}
 </style>
