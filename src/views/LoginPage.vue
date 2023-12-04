@@ -1,53 +1,44 @@
 <script setup lang="ts">
-import MyPage from '@/components/MyPage.vue'
+import { useToast } from 'primevue/usetoast'
+import { useField, useForm } from 'vee-validate'
+
+interface LoginForm {
+  username: string
+  password: string
+}
+
+const toast = useToast()
+const { handleSubmit, resetForm } = useForm<LoginForm>()
+const username = useField<string>('username', (value) => !!value).value
+const password = useField<string>('password', (value) => !!value).value
+
+const onSubmit = handleSubmit((values) => {
+  toast.add({
+    severity: 'info',
+    summary: 'Form submitted',
+    detail: `user: ${values.username} password: ${values.password}`,
+    life: 3000
+  })
+  resetForm()
+})
 </script>
 
 <template>
-  <MyPage>
-    <form action="/login">
-      <div class="input">
-        <label for="username">Username</label><br />
-        <input type="text" id="username" name="username" />
-      </div>
-      <br />
+  <div class="card flex justify-content-center mt-4">
+    <form @submit="onSubmit" class="flex flex-column gap-4">
+      <span class="p-float-label">
+        <InputText id="username" name="username" type="text" v-model="username" />
+        <label for="username">Username</label>
+      </span>
 
-      <div class="input">
-        <label for="password">Password</label><br />
-        <input type="password" id="password" name="password" />
-      </div>
-      <br />
-      <div class="input">
-        <input class="button" type="submit" value="Submit" />
-      </div>
+      <span class="p-float-label">
+        <InputText id="password" type="password" v-model="password" />
+        <label for="password">Password</label>
+      </span>
+
+      <PvButton type="submit" label="Submit" />
     </form>
-  </MyPage>
+  </div>
 </template>
 
-<style scoped>
-.input {
-  //background-color: var(--color-background-soft);
-  //border-color: var(--color-border);
-  border-radius: 5px;
-  display: inline-block;
-}
-
-.input:not(:last-of-type) {
-  margin-bottom: 0.5rem;
-}
-
-.input input {
-  border: none;
-  padding: 0.25rem 0.5rem;
-  border-radius: 5px;
-}
-
-.button {
-  appearance: none;
-
-  padding: 0.5rem;
-  border: none;
-  background-color: var(--color-primary);
-  color: var(--color-text);
-  font-size: 1.25rem;
-}
-</style>
+<style scoped></style>

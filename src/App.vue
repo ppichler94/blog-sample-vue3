@@ -17,6 +17,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
   <main>
     <RouterView />
+    <PvToast />
   </main>
 </template>
 
