@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useToast } from 'primevue/usetoast'
-import { useField, useForm } from 'vee-validate'
+import { useForm } from 'vee-validate'
+import FormInput from '@/components/FormInput.vue'
 
 interface LoginForm {
   username: string
@@ -9,8 +10,6 @@ interface LoginForm {
 
 const toast = useToast()
 const { handleSubmit, resetForm } = useForm<LoginForm>()
-const username = useField<string>('username', (value) => !!value).value
-const password = useField<string>('password', (value) => !!value).value
 
 const onSubmit = handleSubmit((values) => {
   toast.add({
@@ -25,18 +24,11 @@ const onSubmit = handleSubmit((values) => {
 
 <template>
   <div class="card flex justify-content-center mt-4">
-    <form @submit="onSubmit" class="flex flex-column gap-4">
-      <span class="p-float-label">
-        <InputText id="username" name="username" type="text" v-model="username" />
-        <label for="username">Username</label>
-      </span>
+    <form @submit="onSubmit" class="flex flex-column gap-2">
+      <FormInput name="username" label="Username" />
+      <FormInput name="password" label="Password" type="password" />
 
-      <span class="p-float-label">
-        <InputText id="password" type="password" v-model="password" />
-        <label for="password">Password</label>
-      </span>
-
-      <PvButton type="submit" label="Submit" />
+      <PvButton type="submit" label="Login" />
     </form>
   </div>
 </template>

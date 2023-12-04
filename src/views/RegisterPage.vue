@@ -1,26 +1,40 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { useToast } from 'primevue/usetoast'
+import { useForm } from 'vee-validate'
+import FormInput from '@/components/FormInput.vue'
 
-function onSubmit() {}
+interface LoginForm {
+  username: string
+  password: string
+  passwordRepeat: string
+}
 
-const form = reactive({
-  username: '',
-  password: ''
+const toast = useToast()
+const { handleSubmit, resetForm } = useForm<LoginForm>()
+const onSubmit = handleSubmit((values, actions) => {
+  if (values.password != values.passwordRepeat) {
+    actions.setFieldError('passwordRepeat', 'Passwords must be equal')
+    return
+  }
+  toast.add({
+    severity: 'info',
+    summary: 'Form submitted',
+    detail: `user: ${values.username} password: ${values.password}`,
+    life: 3000
+  })
+  resetForm()
 })
 </script>
 
 <template>
-  <ElForm :model="form">
-    <ElFormItem label="username">
-      <ElInput v-model="form.username" />
-    </ElFormItem>
-    <ElFormItem label="password">
-      <ElInput v-model="form.password" type="password" />
-    </ElFormItem>
-    <ElFormItem>
-      <ElButton type="primary" @click="onSubmit">Register</ElButton>
-    </ElFormItem>
-  </ElForm>
+  <div class="card flex justify-content-center mt-4">
+    <form @submit="onSubmit" class="flex flex-column gap-2">
+      <FormInput name="username" label="Username" />
+      <FormInput name="password" label="Password" type="password" />
+      <FormInput name="passwordRepeat" label="Repeat password" type="password" />
+      <PvButton type="submit" label="Register" />
+    </form>
+  </div>
 </template>
 
 <style scoped></style>
