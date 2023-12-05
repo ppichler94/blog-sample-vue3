@@ -1,14 +1,21 @@
 <script setup lang="ts">
-defineProps<{
+import { ref } from 'vue'
+import MarkdownIt from 'markdown-it'
+
+const props = defineProps<{
   title: string
   content: string
 }>()
+
+const renderedContent = ref('')
+const md = new MarkdownIt()
+renderedContent.value = md.render(props.content)
 </script>
 
 <template>
   <div class="content-host">
     <h1 class="header">{{ title }}</h1>
-    <p class="content-container">{{ content }}</p>
+    <div class="content-container" v-html="renderedContent" />
   </div>
 </template>
 

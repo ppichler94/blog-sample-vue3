@@ -10,14 +10,19 @@ const { value, errorMessage } = useField<string>(props.name)
 
 <template>
   <span class="p-float-label">
-    <PvTextarea id="input" v-bind="$attrs" v-model="value" :class="{ 'p-invalid': errorMessage }" />
-    <label for="input">{{ label }}</label>
+    <PvTextarea
+      class="inputArea"
+      v-bind="$attrs"
+      v-model="value"
+      :class="{ 'p-invalid': errorMessage }"
+    />
+    <label>{{ label }}</label>
   </span>
   <small class="p-error" id="text-error">{{ errorMessage || '&nbsp;' }}</small>
 </template>
 
 <style scoped>
-#input {
+.inputArea {
   width: 100%;
 }
 </style>

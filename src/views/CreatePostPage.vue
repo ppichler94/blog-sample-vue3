@@ -5,7 +5,6 @@ import FormInputText from '@/components/FormInputText.vue'
 import FormTextarea from '@/components/FormTextarea.vue'
 import { PostService } from '@/views/PostService'
 
-
 const service = new PostService()
 
 const toast = useToast()
@@ -35,9 +34,14 @@ const onSubmit = handleSubmit(async (values, actions) => {
 
 <template>
   <div class="card flex justify-content-center mt-4">
-    <form @submit="onSubmit" class="flex flex-column gap-2">
+    <form @submit="onSubmit" class="flex flex-column gap-2 w-6">
       <FormInputText name="title" label="Title" />
-      <FormTextarea name="content" label="Content" type="textarea" />
+      <FormTextarea
+        name="content"
+        label="Content (CommonMark supported)"
+        type="textarea"
+        :rows="8"
+      />
       <PvButton type="submit" label="Create" />
     </form>
   </div>
