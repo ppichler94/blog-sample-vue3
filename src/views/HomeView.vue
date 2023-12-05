@@ -1,26 +1,12 @@
 <script setup lang="ts">
 import MyPage from '@/components/MyPage.vue'
 import BlogPost from '@/components/BlogPost.vue'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { type Post, PostService } from '@/views/PostService'
 
-// fake data
-const posts = ref([
-  {
-    id: 1,
-    title: 'First Post',
-    content: 'Content of the first post'
-  },
-  {
-    id: 2,
-    title: 'Post 2',
-    content: 'Content of the second post'
-  },
-  {
-    id: 3,
-    title: 'Post 3',
-    content: 'Another blog post'
-  }
-])
+const posts = ref<Post[]>()
+const service = new PostService()
+onMounted(async () => (posts.value = await service.getPosts()))
 </script>
 
 <template>

@@ -9,6 +9,7 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Toast from 'primevue/toast'
 import Textarea from 'primevue/textarea'
+import axios from 'axios'
 
 const app = createApp(App)
 
@@ -20,5 +21,7 @@ app.component('InputText', InputText)
 app.component('PvButton', Button)
 app.component('PvToast', Toast)
 app.component('PvTextarea', Textarea)
+
+axios.defaults.baseURL = 'http://localhost:8080'
 
 app.mount('#app')

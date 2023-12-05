@@ -3,25 +3,33 @@ import { useToast } from 'primevue/usetoast'
 import { useField, useForm } from 'vee-validate'
 import FormInputText from '@/components/FormInputText.vue'
 import FormTextarea from '@/components/FormTextarea.vue'
+import { PostService } from '@/views/PostService'
 
-interface Post {
-  title: string
-  content: string
-}
+
+const service = new PostService()
 
 const toast = useToast()
-
 const { handleSubmit, resetForm } = useForm<Post>()
 useField('title', (value) => !!value)
 
-const onSubmit = handleSubmit((values, actions) => {
-  toast.add({
-    severity: 'info',
-    summary: 'Post created',
-    detail: `title: ${values.title}`,
-    life: 3000
-  })
-  resetForm()
+const onSubmit = handleSubmit(async (values, actions) => {
+  try {
+    await service.createPost(values.title, values.content)
+    toast.add({
+      severity: 'info',
+      summary: 'Post created',
+      detail: `title: ${values.title}`,
+      life: 3000
+    })
+    resetForm()
+  } catch (e) {
+    toast.add({
+      severity: 'error',
+      summary: 'Error creating post',
+      detail: e.message,
+      life: 3000
+    })
+  }
 })
 </script>
 
