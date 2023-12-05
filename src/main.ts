@@ -8,6 +8,7 @@ import ToastService from 'primevue/toastservice'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Toast from 'primevue/toast'
+import Textarea from 'primevue/textarea'
 
 const app = createApp(App)
 
@@ -15,8 +16,9 @@ app.use(router)
 app.use(PrimeVue)
 app.use(ToastService)
 
-app.component('PvButton', Button)
 app.component('InputText', InputText)
+app.component('PvButton', Button)
 app.component('PvToast', Toast)
+app.component('PvTextarea', Textarea)
 
 app.mount('#app')

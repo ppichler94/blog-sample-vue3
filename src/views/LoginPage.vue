@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useToast } from 'primevue/usetoast'
 import { useForm } from 'vee-validate'
-import FormInput from '@/components/FormInput.vue'
+import FormInput from '@/components/FormInputText.vue'
 
 interface LoginForm {
   username: string
