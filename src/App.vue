@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { useUserStore } from '@/stores/user'
+
+const user = useUserStore()
 </script>
 
 <template>
@@ -14,6 +17,8 @@ import { RouterLink, RouterView } from 'vue-router'
       <RouterLink to="/login">Login</RouterLink>
       <RouterLink to="/register">Register</RouterLink>
     </nav>
+
+    <div class="user">{{ user.name }}</div>
   </header>
 
   <main>
@@ -61,5 +66,9 @@ nav a:first-of-type {
   display: inline-block;
   white-space: pre;
   font-size: 1.25rem;
+}
+
+.user {
+  white-space: pre;
 }
 </style>

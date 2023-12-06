@@ -2,16 +2,20 @@
 import { useToast } from 'primevue/usetoast'
 import { useForm } from 'vee-validate'
 import FormInput from '@/components/FormInputText.vue'
+import UserService from '@/views/UserService'
 
 interface LoginForm {
   username: string
   password: string
 }
 
+const service = new UserService()
+
 const toast = useToast()
 const { handleSubmit, resetForm } = useForm<LoginForm>()
 
 const onSubmit = handleSubmit((values) => {
+  service.login(values.username, values.password)
   toast.add({
     severity: 'info',
     summary: 'Form submitted',
