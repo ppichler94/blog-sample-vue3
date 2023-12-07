@@ -17,7 +17,8 @@ const items = ref<MenuItem[]>([
   {
     label: 'Create post',
     icon: 'pi pi-plus',
-    route: '/createPost'
+    route: '/createPost',
+    visible: () => user.name != 'Logged out'
   },
   {
     label: 'User',
@@ -35,7 +36,8 @@ const items = ref<MenuItem[]>([
         label: 'Logout',
         command: () => {
           service.logout()
-        }
+        },
+        visible: () => user.name != 'Logged out'
       }
     ]
   }
@@ -60,7 +62,7 @@ const items = ref<MenuItem[]>([
       </template>
       <template #end>
         <span class="pi pi-user" />
-        {{ user.name }}
+        <span class="mx-2">{{ user.name }}</span>
       </template>
     </Menubar>
   </header>
