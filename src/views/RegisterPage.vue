@@ -20,12 +20,6 @@ const onSubmit = handleSubmit((values, actions) => {
     return
   }
   service.addUser(values.username, values.password)
-  toast.add({
-    severity: 'info',
-    summary: 'Form submitted',
-    detail: `user: ${values.username} password: ${values.password}`,
-    life: 3000
-  })
   resetForm()
 })
 </script>
