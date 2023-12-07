@@ -11,16 +11,23 @@ import Toast from 'primevue/toast'
 import Textarea from 'primevue/textarea'
 import axios from 'axios'
 import { createPinia } from 'pinia'
+import Menubar from 'primevue/menubar'
+import Menu from 'primevue/menu'
+import Ripple from 'primevue/ripple'
 
 const app = createApp(App)
 const pinia = createPinia()
 
 app.use(router)
-app.use(PrimeVue)
+app.use(PrimeVue, { ripple: true })
 app.use(ToastService)
 app.use(pinia)
 
+app.directive('ripple', Ripple)
+
 app.component('InputText', InputText)
+app.component('Menu', Menu)
+app.component('Menubar', Menubar)
 app.component('PvButton', Button)
 app.component('PvToast', Toast)
 app.component('PvTextarea', Textarea)

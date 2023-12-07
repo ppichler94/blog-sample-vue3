@@ -1,24 +1,68 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { useUserStore } from '@/stores/user'
+import { ref } from 'vue'
+import UserService from '@/views/UserService'
+import type { MenuItem } from 'primevue/menuitem'
 
 const user = useUserStore()
+const service = new UserService()
+
+const items = ref<MenuItem[]>([
+  {
+    label: 'Home',
+    icon: 'pi pi-home',
+    route: '/'
+  },
+  {
+    label: 'Create post',
+    icon: 'pi pi-plus',
+    route: '/createPost'
+  },
+  {
+    label: 'User',
+    style: 'flex-end',
+    items: [
+      {
+        label: 'Register',
+        route: '/register'
+      },
+      {
+        label: 'Login',
+        route: '/login'
+      },
+      {
+        label: 'Logout',
+        command: () => {
+          service.logout()
+        }
+      }
+    ]
+  }
+])
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="25" height="25" />
-    <span class="title">Blog Sample Vue3</span>
-
-    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-      <RouterLink to="/createPost">Create post</RouterLink>
-      <RouterLink to="/login">Login</RouterLink>
-      <RouterLink to="/register">Register</RouterLink>
-    </nav>
-
-    <div class="user">{{ user.name }}</div>
+    <Menubar :model="items">
+      <template #item="{ item, props, hasSubmenu }">
+        <RouterLink v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+          <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+            <span :class="item.icon" />
+            <span class="ml-2">{{ item.label }}</span>
+          </a>
+        </RouterLink>
+        <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
+          <span :class="item.icon" />
+          <span class="ml-2">{{ item.label }}</span>
+          <span v-if="hasSubmenu" class="pi pi-fw pi-angle-down ml-2" />
+        </a>
+      </template>
+      <template #end>
+        <span class="pi pi-user" />
+        {{ user.name }}
+      </template>
+    </Menubar>
   </header>
 
   <main>
@@ -31,44 +75,5 @@ const user = useUserStore()
 header {
   line-height: 1.5;
   max-height: 100vh;
-  display: flex;
-  place-items: center;
-  padding-right: calc(var(--section-gap) / 2);
-  border-bottom: 1px solid;
-  border-color: var(--color-border);
-}
-
-.logo {
-  display: block;
-  margin: 0 2rem 0 0;
-}
-
-nav {
-  width: 100%;
-  text-align: left;
-  font-size: 1rem;
-  padding: 1rem 0;
-  display: flex;
-  margin-left: 0.5rem;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-.title {
-  display: inline-block;
-  white-space: pre;
-  font-size: 1.25rem;
-}
-
-.user {
-  white-space: pre;
 }
 </style>
