@@ -12,9 +12,13 @@ const service = new UserService()
 
 const { handleSubmit, resetForm } = useForm<LoginForm>()
 
-const onSubmit = handleSubmit((values) => {
-  service.login(values.username, values.password)
-  resetForm()
+const onSubmit = handleSubmit(async (values, action) => {
+  try {
+    await service.login(values.username, values.password)
+    resetForm()
+  } catch (e: any) {
+    action.setFieldError('password', 'Invalid credentials')
+  }
 })
 </script>
 
