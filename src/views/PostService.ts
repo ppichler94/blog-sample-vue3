@@ -5,6 +5,7 @@ export interface Post {
   id: number
   title: string
   content: string
+  author: string
 }
 
 export class PostService {
@@ -29,6 +30,7 @@ export class PostService {
         detail: e.message,
         life: 3000
       })
+      return []
     }
   }
 }

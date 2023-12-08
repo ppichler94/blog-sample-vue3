@@ -14,6 +14,7 @@ onMounted(async () => (posts.value = await service.getPosts()))
     v-for="post in posts"
     :title="post.title"
     :content="post.content"
+    :author="post.author"
     :key="post.id"
   />
 </template>

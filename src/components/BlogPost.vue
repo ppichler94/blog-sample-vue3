@@ -5,6 +5,7 @@ import MarkdownIt from 'markdown-it'
 const props = defineProps<{
   title: string
   content: string
+  author?: string
 }>()
 
 const renderedContent = ref('')
@@ -16,6 +17,7 @@ renderedContent.value = md.render(props.content)
   <div class="content-host">
     <h1 class="header">{{ title }}</h1>
     <div class="content-container" v-html="renderedContent" />
+    <small>{{author}}</small>
   </div>
 </template>
 
