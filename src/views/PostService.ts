@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useToast } from 'primevue/usetoast'
+import MessageService from '@/views/MessageService'
 
 export interface Post {
   id: number
@@ -9,7 +10,7 @@ export interface Post {
 }
 
 export class PostService {
-  toast = useToast()
+  messageService = new MessageService()
 
   async createPost(title: string, content: string) {
     const dto = {
@@ -24,12 +25,7 @@ export class PostService {
       const result = await axios.get('/api/articles')
       return result.data
     } catch (e: any) {
-      this.toast.add({
-        severity: 'error',
-        summary: 'Error reading posts',
-        detail: e.message,
-        life: 3000
-      })
+      this.messageService.error('Error reading posts')
       return []
     }
   }

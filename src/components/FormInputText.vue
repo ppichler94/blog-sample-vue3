@@ -18,7 +18,7 @@ const { value, errorMessage } = useField<string>(props.name)
     />
     <label>{{ label }}</label>
   </span>
-  <small class="p-error" id="text-error">{{ errorMessage || '&nbsp;' }}</small>
+  <small class="p-error -mt-3 mb-3" id="text-error">{{ errorMessage }}</small>
 </template>
 
 <style scoped>

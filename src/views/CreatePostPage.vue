@@ -33,8 +33,8 @@ const onSubmit = handleSubmit(async (values, actions) => {
 </script>
 
 <template>
-  <div class="card flex justify-content-center mt-4">
-    <form @submit="onSubmit" class="flex flex-column gap-2 w-6">
+  <div class="card flex justify-content-center mt-6">
+    <form @submit="onSubmit" class="flex flex-column gap-3 w-6">
       <FormInputText name="title" label="Title" />
       <FormTextarea
         name="content"
