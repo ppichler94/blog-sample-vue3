@@ -19,29 +19,35 @@ const items = ref<MenuItem[]>([
     icon: 'pi pi-plus',
     route: '/createPost',
     visible: () => user.name != 'Logged out'
-  },
-  {
-    label: 'User',
-    style: 'flex-end',
-    items: [
-      {
-        label: 'Register',
-        route: '/register'
-      },
-      {
-        label: 'Login',
-        route: '/login'
-      },
-      {
-        label: 'Logout',
-        command: () => {
-          service.logout()
-        },
-        visible: () => user.name != 'Logged out'
-      }
-    ]
   }
 ])
+const user_menu = ref()
+const userItems = ref<MenuItem[]>([
+  {
+    label: 'Register',
+    icon: 'pi pi-user-plus',
+    route: '/register',
+    visible: () => user.name == 'Logged out'
+  },
+  {
+    label: 'Login',
+    icon: 'pi pi-sign-in',
+    route: '/login',
+    visible: () => user.name == 'Logged out'
+  },
+  {
+    label: 'Logout',
+    icon: 'pi pi-sign-out',
+    command: () => {
+      service.logout()
+    },
+    visible: () => user.name != 'Logged out'
+  }
+])
+
+function toggleUserMenu(event: any) {
+  user_menu.value.toggle(event)
+}
 </script>
 
 <template>
@@ -61,8 +67,28 @@ const items = ref<MenuItem[]>([
         </a>
       </template>
       <template #end>
-        <span class="pi pi-user" />
-        <span class="mx-2">{{ user.name }}</span>
+        <a
+          v-ripple
+          class="mx-2 p-3 border-round cursor-pointer hover:surface-100"
+          @click="toggleUserMenu"
+        >
+          <span class="pi pi-user" />
+          <span class="ml-2">{{ user.name }}</span>
+        </a>
+        <Menu ref="user_menu" id="user-menu" :model="userItems" :popup="true">
+          <template #item="{ item, props }">
+            <RouterLink v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+              <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+                <span :class="item.icon" />
+                <span class="ml-2">{{ item.label }}</span>
+              </a>
+            </RouterLink>
+            <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
+              <span :class="item.icon" />
+              <span class="ml-2">{{ item.label }}</span>
+            </a>
+          </template>
+        </Menu>
       </template>
     </Menubar>
   </header>

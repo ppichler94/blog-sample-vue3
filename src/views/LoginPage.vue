@@ -2,6 +2,7 @@
 import { useForm } from 'vee-validate'
 import FormInput from '@/components/FormInputText.vue'
 import UserService from '@/views/UserService'
+import { useRouter } from 'vue-router'
 
 interface LoginForm {
   username: string
@@ -9,6 +10,7 @@ interface LoginForm {
 }
 
 const service = new UserService()
+const router = useRouter()
 
 const { handleSubmit, resetForm } = useForm<LoginForm>()
 
@@ -16,6 +18,7 @@ const onSubmit = handleSubmit(async (values, action) => {
   try {
     await service.login(values.username, values.password)
     resetForm()
+    await router.push('/')
   } catch (e: any) {
     action.setFieldError('password', 'Invalid credentials')
   }
