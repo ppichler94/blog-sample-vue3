@@ -52,7 +52,7 @@ function toggleUserMenu(event: any) {
 
 <template>
   <header>
-    <Menubar :model="items">
+    <MenuBar :model="items">
       <template #item="{ item, props, hasSubmenu }">
         <RouterLink v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
           <a v-ripple :href="href" v-bind="props.action" @click="navigate">
@@ -75,7 +75,7 @@ function toggleUserMenu(event: any) {
           <span class="pi pi-user" />
           <span class="ml-2">{{ user.name }}</span>
         </a>
-        <Menu ref="user_menu" id="user-menu" :model="userItems" :popup="true">
+        <PvMenu ref="user_menu" id="user-menu" :model="userItems" :popup="true">
           <template #item="{ item, props }">
             <RouterLink v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
               <a v-ripple :href="href" v-bind="props.action" @click="navigate">
@@ -88,9 +88,9 @@ function toggleUserMenu(event: any) {
               <span class="ml-2">{{ item.label }}</span>
             </a>
           </template>
-        </Menu>
+        </PvMenu>
       </template>
-    </Menubar>
+    </MenuBar>
   </header>
 
   <main>

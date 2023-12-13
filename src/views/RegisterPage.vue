@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useForm } from 'vee-validate'
+import { type Path, useForm } from 'vee-validate'
 import FormInput from '@/components/FormInputText.vue'
 import UserService from '@/views/UserService'
 import MessageService from '@/views/MessageService'
@@ -24,11 +24,13 @@ const onSubmit = handleSubmit(async (values, actions) => {
     await service.addUser(values.username, values.password)
     messageService.success('User created')
     resetForm()
-  } catch (e: MessageError) {
-    if (e.field) {
-      actions.setFieldError(e.field, e.detail)
+  } catch (e: unknown) {
+    const error = e as MessageError
+    if (error.field) {
+      const field = error.field as Path<LoginForm>
+      actions.setFieldError(field, error.detail)
     }
-    messageService.displayError(e)
+    messageService.displayError(error)
   }
 })
 </script>

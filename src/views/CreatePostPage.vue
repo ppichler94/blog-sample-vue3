@@ -3,7 +3,7 @@ import { useToast } from 'primevue/usetoast'
 import { useField, useForm } from 'vee-validate'
 import FormInputText from '@/components/FormInputText.vue'
 import FormTextarea from '@/components/FormTextarea.vue'
-import { PostService } from '@/views/PostService'
+import { type Post, PostService } from '@/views/PostService'
 
 const service = new PostService()
 
@@ -11,7 +11,7 @@ const toast = useToast()
 const { handleSubmit, resetForm } = useForm<Post>()
 useField('title', (value) => !!value)
 
-const onSubmit = handleSubmit(async (values, actions) => {
+const onSubmit = handleSubmit(async (values) => {
   try {
     await service.createPost(values.title, values.content)
     toast.add({

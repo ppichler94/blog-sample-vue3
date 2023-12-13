@@ -3,8 +3,8 @@ import { useForm } from 'vee-validate'
 import FormInput from '@/components/FormInputText.vue'
 import UserService from '@/views/UserService'
 import { useRouter } from 'vue-router'
-import type MessageError from '@/views/MessageError'
 import MessageService from '@/views/MessageService'
+import type MessageError from '@/views/MessageError'
 
 interface LoginForm {
   username: string
@@ -22,11 +22,12 @@ const onSubmit = handleSubmit(async (values, action) => {
     await service.login(values.username, values.password)
     resetForm()
     await router.push('/')
-  } catch (e: MessageError) {
-    if (e.field) {
+  } catch (e: unknown) {
+    const error = e as MessageError
+    if (error.field) {
       action.setFieldError('password', 'Invalid credentials')
     } else {
-      messageService.displayError(e)
+      messageService.displayError(error)
     }
   }
 })

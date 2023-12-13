@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { useToast } from 'primevue/usetoast'
 import MessageService from '@/views/MessageService'
 
 export interface Post {
